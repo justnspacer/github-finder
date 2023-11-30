@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
 import GithubContext from '../../context/github/githubContext';
@@ -7,11 +7,14 @@ import GithubContext from '../../context/github/githubContext';
 const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
   const { getUser, loading, user, repos, getUserRepos } = githubContext;
+  const params = useParams();
+  const login = params.login;
 
   useEffect(() => {
-    getUser(match.params.login);
-    getUserRepos(match.params.login);
-  });
+    getUser(login);
+    getUserRepos(login);
+    // eslint-disable-next-line
+  }, []);
 
   const {
     name,
@@ -19,7 +22,6 @@ const User = ({ match }) => {
     location,
     bio,
     blog,
-    login,
     company,
     html_url,
     followers,
